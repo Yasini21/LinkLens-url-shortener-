@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import Navbar from "../components/Navbar";
-import "../pages/dashboard.css";
+import "../pages/Dashboard.css";
 import UrlForm from "../components/UrlForm";
 import UrlTable from "../components/UrlTable";
 import { FiLink, FiBarChart2 } from "react-icons/fi";

@@ -1,10 +1,11 @@
-import express from "express";
+﻿import express from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import {
   createShortUrl,
   getUserUrls,
   deleteUrl,
-  getAnalytics
+  getAnalytics,
+  getOverviewAnalytics,
 } from "../controllers/urlController.js";
 
 const router = express.Router();
@@ -21,6 +22,12 @@ router.get(
   "/",
   authMiddleware,
   getUserUrls
+);
+
+router.get(
+  "/overview",
+  authMiddleware,
+  getOverviewAnalytics
 );
 
 // Delete URL

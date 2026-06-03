@@ -1,111 +1,93 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+:root{
+  --bg: #f8fafc;
+  --bg-gradient: linear-gradient(180deg,#f8fbff 0%, #eef2ff 100%);
+  --surface: rgba(255,255,255,0.76);
+  --surface-strong: #ffffff;
+  --surface-border: rgba(15,23,42,0.08);
+  --text: #0f172a;
+  --muted: #52627a;
+  --primary: #2563eb;
+  --primary-600: #1d4ed8;
+  --shadow: 0 16px 48px rgba(15,23,42,0.08);
+  --radius: 20px;
+  --accent: linear-gradient(90deg,#7c3aed 0%, #2563eb 100%);
+  --success: #10b981;
+  --border: rgba(15,23,42,0.07);
+  --text-soft: #475569;
+}
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+[data-theme='dark']{
+  --bg: #0b1120;
+  --bg-gradient: linear-gradient(180deg,#0b1120 0%, #131a2c 100%);
+  --surface: rgba(15,23,42,0.82);
+  --surface-strong: rgba(15,23,42,0.92);
+  --surface-border: rgba(148,163,184,0.14);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --primary: #60a5fa;
+  --primary-600: #3b82f6;
+  --shadow: 0 18px 60px rgba(0,0,0,0.35);
+  --accent: linear-gradient(90deg,#8b5cf6 0%, #2563eb 100%);
+  --success: #34d399;
+  --border: rgba(148,163,184,0.12);
+  --text-soft: #cbd5e1;
+}
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
+/* Global base */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
   background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  color: var(--text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+::selection{background:rgba(37,99,235,0.2);color:var(--text)}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+/* Common utilities */
+.container{max-width:1200px;margin:0 auto;padding:32px}
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(12px);border:1px solid var(--surface-border)}
 
-body {
-  margin: 0;
-}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:600}
+.btn-primary{background:var(--accent);color:white;box-shadow:0 8px 24px rgba(37,99,235,0.18);transition:transform .16s ease,box-shadow .16s ease}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(37,99,235,0.2)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+/* Inputs */
+input,textarea,select{font-family:inherit;border:1px solid var(--surface-border);padding:12px;border-radius:12px;outline:none;background:rgba(255,255,255,0.72);color:var(--text);transition:box-shadow .15s ease,border-color .15s ease}
+input:focus,textarea:focus{box-shadow:0 10px 24px rgba(37,99,235,0.14);border-color:var(--primary-600)}
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+[data-theme='dark'] input, [data-theme='dark'] textarea, [data-theme='dark'] select{background:rgba(15,23,42,0.9);color:var(--text)}
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
+/* Small helpers */
+.muted{color:var(--muted)}
+.accent{color:var(--primary)}
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
+/* Subtle animated background blobs for pages that want them */
+.decorative-blob{position:absolute;pointer-events:none;filter:blur(40px);opacity:0.6}
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+/* Common utilities */
+.container{max-width:1200px;margin:0 auto;padding:32px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(6px)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:600}
+.btn-primary{background:var(--accent);color:white;box-shadow:0 8px 20px rgba(37,99,235,0.12);transition:transform .16s ease,box-shadow .16s ease}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(37,99,235,0.14)}
+.btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--muted)}
+
+/* Inputs */
+input,textarea,select{font-family:inherit;border:1px solid #e6eefc;padding:12px;border-radius:12px;outline:none;transition:box-shadow .15s ease,border-color .15s ease;color:var(--text)}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
+input:focus,textarea:focus{box-shadow:0 6px 16px rgba(37,99,235,0.12);border-color:var(--primary-600)}
+
+/* Small helpers */
+.muted{color:var(--muted)}
+.accent{color:var(--primary)}
+
+/* Subtle animated background blobs for pages that want them */
+.decorative-blob{position:absolute;pointer-events:none;filter:blur(40px);opacity:0.6}

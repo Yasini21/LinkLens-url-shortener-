@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
+import OverallAnalytics from "./pages/OverallAnalytics";
 import ProtectedRoute from "./components/ProtectedRoutes";
 
 function App() {
@@ -33,13 +34,22 @@ function App() {
 />
 
       <Route
-  path="/analytics/:id"
-  element={
-    <ProtectedRoute>
-      <Analytics />
-    </ProtectedRoute>
-  }
-/>
+        path="/analytics"
+        element={
+          <ProtectedRoute>
+            <OverallAnalytics />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/analytics/:id"
+        element={
+          <ProtectedRoute>
+            <Analytics />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

@@ -1,98 +1,188 @@
 import { useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { FiEye, FiEyeOff, FiCheckCircle, FiShield, FiTrendingUp } from "react-icons/fi";
+import "./Login.css";
 
 function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
+    try {
 
-    setLoading(true);
-    setError("");
+      setLoading(true);
+      setError("");
 
-    const response = await API.post(
-      "/auth/login",
-      {
-        email,
-        password,
-      }
-    );
+      const response = await API.post(
+        "/auth/login",
+        {
+          email,
+          password
+        }
+      );
 
-    localStorage.setItem(
-      "token",
-      response.data.token
-    );
+      localStorage.setItem(
+        "token",
+        response.data.token
+      );
 
-    navigate("/dashboard");
+      navigate("/dashboard");
 
-  } catch (error) {
+    } catch (error) {
 
-    setError(
-      error.response?.data?.msg ||
-      "Login Failed"
-    );
+      setError(
+        error.response?.data?.msg ||
+        "Login Failed"
+      );
 
-  } finally {
+    } finally {
 
-    setLoading(false);
+      setLoading(false);
 
-  }
-};
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="auth-page">
 
-      <h1>Login</h1>
+      <div className="auth-left">
 
-      <input
-        type="email"
-        placeholder="Enter Email"
-        value={email}
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
+        <span className="eyebrow">SaaS-ready link intelligence</span>
 
-      <br />
-      <br />
+        <h1>
+          Link<span>Lens</span>
+        </h1>
 
-      <input
-        type="password"
-        placeholder="Enter Password"
-        value={password}
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
+        <h2>
+          Shorten links with confidence.
+        </h2>
 
-      <br />
-      <br />
-      {
-  error && (
-    <p>{error}</p>
-  )
-}
+        <p>
+          Track every click, generate instant QR codes,
+          and analyze audience behavior with clean dashboards.
+        </p>
 
-     <button
-  type="submit"
->
-  {
-    loading
-      ? "Logging In..."
-      : "Login"
-  }
-</button>
+        <div className="feature-grid">
+          <div className="feature-item">
+            <FiCheckCircle />
+            <span>Fast setup in minutes</span>
+          </div>
 
-    </form>
+          <div className="feature-item">
+            <FiShield />
+            <span>Reliable link security</span>
+          </div>
+
+          <div className="feature-item">
+            <FiTrendingUp />
+            <span>Growth-ready insights</span>
+          </div>
+        </div>
+
+        <div className="trust-row">
+          <span>Trusted by modern teams and marketing leaders.</span>
+        </div>
+
+      </div>
+
+      <div className="auth-card">
+
+        <h2>
+          Welcome Back 👋
+        </h2>
+
+        <p>
+          Login to continue
+        </p>
+
+        <form onSubmit={handleSubmit}>
+
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+          />
+
+          <div className="password-wrapper">
+
+            <input
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+            />
+
+            <button
+              type="button"
+              className="eye-btn"
+              onClick={() =>
+                setShowPassword(
+                  !showPassword
+                )
+              }
+            >
+              {
+                showPassword
+                  ? <FiEyeOff />
+                  : <FiEye />
+              }
+            </button>
+
+          </div>
+
+          {
+            error &&
+            <p className="error-text">
+              {error}
+            </p>
+          }
+
+          <button
+            className="auth-btn"
+            type="submit"
+          >
+            {
+              loading
+                ? "Signing In..."
+                : "Login"
+            }
+          </button>
+
+        </form>
+
+        <p className="bottom-text">
+
+          Don't have an account?
+
+          <Link to="/register">
+            Register
+          </Link>
+
+        </p>
+
+      </div>
+
+    </div>
   );
 }
 

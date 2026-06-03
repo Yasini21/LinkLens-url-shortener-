@@ -1,11 +1,15 @@
 import { useState } from "react";
 import API from "../services/api";
+import { FiCopy } from "react-icons/fi";
+import { QRCodeCanvas } from "qrcode.react";
 
 function UrlForm({ fetchUrls }) {
 
   const [originalUrl, setOriginalUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [shortUrl, setShortUrl] = useState("");
+  const [customAlias,setCustomAlias] = useState("");
+  const [copied,setCopied] = useState(false);
 
   const handleSubmit = async (e) => {
 
@@ -22,6 +26,7 @@ function UrlForm({ fetchUrls }) {
   "/url/create",
   {
     originalUrl,
+    customAlias
   },
   {
     headers: {
@@ -33,6 +38,7 @@ setShortUrl(
   `http://localhost:5000/${response.data.shortCode}`
 );
       setOriginalUrl("");
+      setCustomAlias("");
 
       fetchUrls();
 
@@ -48,7 +54,8 @@ setShortUrl(
   };
 
   return (
-    <div>
+  <div>
+
     <form
       onSubmit={handleSubmit}
       className="url-form"
@@ -59,7 +66,20 @@ setShortUrl(
         placeholder="Enter URL..."
         value={originalUrl}
         onChange={(e) =>
-          setOriginalUrl(e.target.value)
+          setOriginalUrl(
+            e.target.value
+          )
+        }
+      />
+
+      <input
+        type="text"
+        placeholder="Custom Alias (Optional)"
+        value={customAlias}
+        onChange={(e) =>
+          setCustomAlias(
+            e.target.value
+          )
         }
       />
 
@@ -74,35 +94,70 @@ setShortUrl(
       </button>
 
     </form>
+
     {
-  shortUrl && (
+      shortUrl && (
 
-    <div className="success-card">
+        <div className="success-card">
 
-      <h3>
-        URL Created Successfully 🎉
-      </h3>
+          <h3>
+            URL Created Successfully 🎉
+          </h3>
 
-      <p>
-        {shortUrl}
-      </p>
+          <div className="success-row">
 
-      <button
-        onClick={() =>
-          navigator.clipboard.writeText(
-            shortUrl
-          )
-        }
-      >
-        Copy
-      </button>
+            <p>
+              {shortUrl}
+            </p>
 
-    </div>
+            <button
+              type="button"
+              className="copy-btn"
+              onClick={() => {
 
-  )
-}
-</div>
-  );
+                navigator.clipboard.writeText(
+                  shortUrl
+                );
+
+                setCopied(true);
+
+                setTimeout(() => {
+                  setCopied(false);
+                }, 2000);
+
+              }}
+            >
+
+              {
+                copied
+                  ? <FiCheck />
+                  : <FiCopy />
+              }
+
+            </button>
+
+          </div>
+
+          <div className="qr-section">
+
+            <h4>
+              Scan QR Code
+            </h4>
+
+            <QRCodeCanvas
+              value={shortUrl}
+              size={140}
+            />
+
+          </div>
+
+        </div>
+
+      )
+    }
+
+  </div>
+);
 }
 
 export default UrlForm;

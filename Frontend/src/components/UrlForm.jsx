@@ -35,7 +35,7 @@ function UrlForm({ fetchUrls }) {
   }
 );
 setShortUrl(
-  `http://localhost:5000/${response.data.shortCode}`
+  `https://linklens-url-shortener-backend.onrender.com/${response.data.shortCode}`
 );
       setOriginalUrl("");
       setCustomAlias("");

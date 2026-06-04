@@ -69,7 +69,8 @@ function Analytics() {
   };
 
   const recentVisits = data?.recentVisits || [];
-  const shortUrl = `http://localhost:5000/${data?.shortCode || ""}`;
+  const shortUrl =
+  `https://linklens-url-shortener-backend.onrender.com/${data?.shortCode || ""}`;
 
   const analyticsSummary = useMemo(() => {
     const browserCounts = {};

@@ -135,10 +135,10 @@ function UrlTable({ urls, fetchUrls }) {
                     <td>
                       <a
                         className="short-link"
-                        href={`http://localhost:5000/${url.shortCode}`}
+                       href={`https://linklens-url-shortener-backend.onrender.com/${url.shortCode}`}
                         target="_blank"
                         rel="noreferrer"
-                        title={`http://localhost:5000/${url.shortCode}`}
+                        title={`https://linklens-url-shortener-backend.onrender.com/${url.shortCode}`}
                       >
                         {url.shortCode}
                       </a>

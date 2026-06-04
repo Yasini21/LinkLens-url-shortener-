@@ -13,6 +13,9 @@
   z-index:100;
 }
 
+/* prevent accidental wrapping that breaks alignment */
+.navbar{flex-wrap:nowrap}
+
 .brand{
   display:flex;
   align-items:center;
@@ -37,11 +40,30 @@
   line-height:1.1;
 }
 
+/* allow brand text to shrink and avoid overflow */
+.brand-copy{min-width:0}
+
+.brand-name{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:clamp(100px,20vw,260px);
+}
+
 .nav-menu{
   display:flex;
   align-items:center;
   gap:18px;
 }
+
+.nav-desktop .nav-menu{flex-direction:row}
+.nav-desktop .nav-actions{flex-direction:row}
+
+/* ensure nav-desktop stays aligned to the right */
+.nav-desktop{margin-left:auto}
+
+/* ensure nav items don't cause overflow on small screens */
+.nav-item{min-width:0}
 
 .nav-item{
   color:var(--muted);
@@ -74,6 +96,16 @@
   gap:12px;
 }
 
+/* Desktop nav container (visible on larger screens) */
+.nav-desktop{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* By default hide the mobile menu; it will be enabled in narrow viewports */
+.mobile-menu{display:none}
+
 .theme-btn,
 .logout-btn{
   display:inline-flex;
@@ -94,8 +126,10 @@
   box-shadow:0 10px 30px rgba(15,23,42,0.08);
 }
 
-.theme-btn{
-  min-width:120px;
+@media(max-width:768px){
+  .theme-btn{
+      min-width:auto;
+  }
 }
 
 .logout-btn{
@@ -112,20 +146,137 @@
   background:var(--surface-border);
 }
 
-@media(max-width: 768px){
+@media (max-width: 768px) {
+
+  .theme-text{
+    display:none;
+  }
+
+  .brand-subtitle{
+    display:none;
+  }
+
   .navbar{
-    flex-direction:column;
-    align-items:flex-start;
-    padding:16px 20px;
+    padding:10px 16px;
+    gap:10px;
+  }
+
+  .nav-menu{
+    gap:8px;
   }
 
   .nav-actions{
-    width:100%;
-    justify-content:space-between;
+    gap:8px;
   }
 
-  .theme-btn,
-  .logout-btn{
-    width:48%;
+  .theme-btn{
+    width:40px;
+    height:40px;
+    padding:0;
+    justify-content:center;
   }
+
+}
+
+@media (max-width:435px){
+
+  .navbar{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .brand{
+    width:auto;
+  }
+
+  .nav-menu{
+    width:auto;
+  }
+
+  .nav-actions{
+    width:auto;
+  }
+
+}
+
+.hamburger-btn{
+  display:none;
+}
+
+@media (max-width:768px){
+
+  .hamburger-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    border:none;
+    background:transparent;
+    font-size:24px;
+    cursor:pointer;
+    color:var(--text);
+  }
+
+  /* hide desktop nav at mobile sizes */
+  .nav-desktop{display:none}
+
+  .mobile-menu{
+    /* hidden until opened by the hamburger button */
+    display:none;
+    width:100%;
+    box-sizing:border-box;
+    /* make the mobile menu an absolute dropdown so it overlays content cleanly */
+    position:absolute;
+    left:0;
+    top:100%;
+    background:var(--surface);
+    padding:8px 12px;
+    box-shadow:0 10px 30px rgba(15,23,42,0.06);
+    border-bottom:1px solid var(--surface-border);
+    z-index:9999;
+  }
+
+  .mobile-menu.open{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:100%;
+    margin-top:0;
+    padding:12px 0 16px 0;
+  }
+
+  .nav-menu,
+  .nav-actions{
+    flex-direction:column;
+    width:100%;
+    align-items:stretch;
+  }
+
+  /* mobile-friendly nav item sizing */
+  .nav-menu .nav-item{
+    display:inline-flex;
+    justify-content:center;
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-size:1rem;
+    text-align:center;
+  }
+  .nav-menu .nav-item,
+  .nav-menu .nav-item:link,
+  .nav-menu .nav-item:visited,
+  .nav-menu .nav-item:active{
+    text-decoration:none !important;
+  }
+}
+
+/* very small screens adjustments */
+@media (max-width: 360px){
+  .brand-mark{width:40px;height:40px;font-size:20px}
+  .brand-name{max-width:140px;font-size:0.98rem}
+  .brand-subtitle{display:none}
+  .navbar{padding:8px 12px;min-height:64px}
 }
